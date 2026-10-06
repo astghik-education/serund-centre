@@ -1,1 +1,2230 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ՍԵՐունդ Կրթական կենտրոն</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@300;400;500;600;700;800;900&family=Noto+Sans:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --green-dark: #2E7D32;
+            --green-primary: #43A047;
+            --green-medium: #66BB6A;
+            --green-light: #A5D6A7;
+            --green-lighter: #C8E6C9;
+            --green-lightest: #E8F5E9;
+            --white: #FFFFFF;
+            --gray-light: #F5F5F5;
+            --gray: #757575;
+            --gray-dark: #424242;
+            --shadow: 0 4px 20px rgba(46, 125, 50, 0.15);
+            --shadow-hover: 0 8px 40px rgba(46, 125, 50, 0.25);
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans Armenian', 'Noto Sans', sans-serif;
+            background: var(--gray-light);
+            color: var(--gray-dark);
+            overflow-x: hidden;
+        }
+
+        /* ===== PRELOADER ===== */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--green-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-logo {
+            width: 120px;
+            height: 120px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            box-shadow: 0 4px 30px rgba(0,0,0,0.12);
+        }
+
+        .header-top {
+            background: var(--green-dark);
+            padding: 8px 0;
+            color: white;
+            font-size: 13px;
+        }
+
+        .header-top .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-top-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-top-info span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-top-info i {
+            color: var(--green-light);
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 4px;
+        }
+
+        .lang-btn {
+            padding: 4px 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: var(--transition);
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--green-medium);
+            border-color: var(--green-medium);
+        }
+
+        .header-main {
+            padding: 12px 0;
+        }
+
+        .header-main .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-img {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 2px 10px rgba(46,125,50,0.2);
+        }
+
+        .logo-text h1 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--green-dark);
+            line-height: 1.2;
+            letter-spacing: 1px;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: var(--gray);
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--gray-dark);
+            font-weight: 600;
+            font-size: 15px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--green-dark);
+            background: var(--green-lightest);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: var(--green-primary);
+            border-radius: 2px;
+        }
+
+        .nav-cta {
+            background: var(--green-primary) !important;
+            color: white !important;
+            padding: 10px 24px !important;
+            border-radius: 25px !important;
+            font-weight: 600 !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--green-dark) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(67,160,71,0.4);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--green-dark);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -6px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== PAGES ===== */
+        .page {
+            display: none;
+            animation: fadeInPage 0.6s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            margin-top: 120px;
+            min-height: 600px;
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-primary) 50%, var(--green-medium) 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            padding: 80px 0;
+        }
+
+        .hero-text {
+            color: white;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .hero-text h2 {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            line-height: 1.7;
+            opacity: 0.95;
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--green-dark);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--green-dark);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+
+        .btn-green {
+            background: var(--green-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(67,160,71,0.3);
+        }
+
+        .btn-green:hover {
+            background: var(--green-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(67,160,71,0.4);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-logo-large {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid rgba(255,255,255,0.2);
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+        }
+
+        .hero-logo-large img {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .hero-stats {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-bubble {
+            background: white;
+            padding: 12px 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            min-width: 100px;
+        }
+
+        .stat-bubble .number {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--green-dark);
+        }
+
+        .stat-bubble .label {
+            font-size: 11px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header .overline {
+            display: inline-block;
+            background: var(--green-lightest);
+            color: var(--green-dark);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--gray-dark);
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            font-size: 17px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid var(--green-lighter);
+            border-radius: 20px;
+            padding: 35px 30px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--green-primary), var(--green-medium));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--green-light);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--green-lightest);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: var(--green-primary);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--green-primary);
+            color: white;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-dark);
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* ===== SERVICES PAGE ===== */
+        .page-hero {
+            margin-top: 120px;
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--green-dark), var(--green-primary));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+
+        .page-hero h2 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-hero p {
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .services-section {
+            padding: 80px 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .service-card-header {
+            background: linear-gradient(135deg, var(--green-primary), var(--green-medium));
+            padding: 30px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .service-card-header i {
+            font-size: 36px;
+            opacity: 0.9;
+        }
+
+        .service-card-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .service-card-body {
+            padding: 30px;
+        }
+
+        .service-card-body ul {
+            list-style: none;
+        }
+
+        .service-card-body ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--green-lightest);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            color: var(--gray-dark);
+        }
+
+        .service-card-body ul li:last-child {
+            border-bottom: none;
+        }
+
+        .service-card-body ul li i {
+            color: var(--green-primary);
+            font-size: 14px;
+        }
+
+        /* ===== TEACHERS SECTION ===== */
+        .teachers-section {
+            padding: 80px 0;
+            background: var(--green-lightest);
+        }
+
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .teacher-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .teacher-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .teacher-photo {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--green-lighter), var(--green-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .teacher-photo i {
+            font-size: 80px;
+            color: var(--green-primary);
+            opacity: 0.5;
+        }
+
+        .teacher-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .teacher-info {
+            padding: 25px 20px;
+        }
+
+        .teacher-info h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--gray-dark);
+            margin-bottom: 5px;
+        }
+
+        .teacher-info .role {
+            font-size: 13px;
+            color: var(--green-primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .teacher-info .subject {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* ===== DIRECTOR SECTION ===== */
+        .director-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .director-card {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 50px;
+            align-items: center;
+            background: var(--green-lightest);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: var(--shadow);
+        }
+
+        .director-photo {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, var(--green-lighter), var(--green-light));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .director-photo i {
+            font-size: 100px;
+            color: var(--green-primary);
+            opacity: 0.4;
+        }
+
+        .director-info h3 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gray-dark);
+            margin-bottom: 5px;
+        }
+
+        .director-info .title {
+            font-size: 16px;
+            color: var(--green-primary);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .director-info p {
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .director-quote {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 15px;
+            border-left: 4px solid var(--green-primary);
+            font-style: italic;
+            color: var(--gray-dark);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* ===== CONTACT PAGE ===== */
+        .contact-section {
+            padding: 80px 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info-cards {
+            display: grid;
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .contact-card-icon {
+            width: 55px;
+            height: 55px;
+            background: var(--green-lightest);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--green-primary);
+            flex-shrink: 0;
+        }
+
+        .contact-card-text h4 {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .contact-card-text p {
+            font-size: 16px;
+            color: var(--gray-dark);
+            font-weight: 700;
+        }
+
+        .contact-card-text a {
+            color: var(--green-dark);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .contact-form-wrapper {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-form-wrapper h3 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--gray-dark);
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--green-lighter);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: var(--transition);
+            background: var(--green-lightest);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--green-primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(67,160,71,0.1);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* ===== MAP ===== */
+        .map-section {
+            padding: 0 0 80px;
+        }
+
+        .map-container {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 400px;
+            background: var(--green-lightest);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--green-dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .logo-area {
+            margin-bottom: 20px;
+        }
+
+        .footer-brand .logo-text h1 {
+            color: white;
+        }
+
+        .footer-brand .logo-text p {
+            color: var(--green-light);
+        }
+
+        .footer-brand > p {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            background: var(--green-medium);
+            transform: translateY(-3px);
+        }
+
+        .footer-col h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--green-primary);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(67,160,71,0.4);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--green-dark);
+            transform: translateY(-5px);
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 55px;
+            height: 55px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+            z-index: 999;
+            transition: var(--transition);
+            animation: whatsappPulse 2s infinite;
+        }
+
+        @keyframes whatsappPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(37,211,102,0); }
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h2 {
+                font-size: 36px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-logo-large {
+                width: 280px;
+                height: 280px;
+            }
+
+            .hero-logo-large img {
+                width: 220px;
+                height: 220px;
+            }
+
+            .director-card {
+                grid-template-columns: 1fr;
+                padding: 30px;
+            }
+
+            .director-photo {
+                height: 280px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 350px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                padding: 80px 30px 30px;
+                box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+                transition: var(--transition);
+                gap: 5px;
+                align-items: stretch;
+            }
+
+            .nav-menu.open {
+                right: 0;
+            }
+
+            .nav-menu a {
+                padding: 14px 20px;
+                font-size: 16px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-text h2 {
+                font-size: 28px;
+            }
+
+            .hero-stats {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .page-hero h2 {
+                font-size: 30px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-top-info {
+                display: none;
+            }
+
+            .teachers-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+        }
+
+        /* ===== OVERLAY ===== */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ===== COUNTER ANIMATION ===== */
+        .counter-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--green-dark), var(--green-primary));
+            color: white;
+        }
+
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+
+        .counter-item .count {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .counter-item .count-label {
+            font-size: 14px;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .counter-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ===== GALLERY / LITTLE ENGLISH CLUB ===== */
+        .club-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .club-card {
+            background: linear-gradient(135deg, var(--green-lightest), white);
+            border: 2px solid var(--green-lighter);
+            border-radius: 25px;
+            padding: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .club-visual {
+            background: linear-gradient(135deg, var(--green-primary), var(--green-medium));
+            border-radius: 20px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 80px;
+        }
+
+        .club-info h3 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--green-dark);
+            margin-bottom: 15px;
+        }
+
+        .club-info p {
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .club-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .club-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-dark);
+        }
+
+        .club-feature i {
+            color: var(--green-primary);
+        }
+
+        @media (max-width: 768px) {
+            .club-card {
+                grid-template-columns: 1fr;
+                padding: 30px;
+            }
+        }
+
+        /* Schedule Table */
+        .schedule-section {
+            padding: 80px 0;
+            background: var(--green-lightest);
+        }
+
+        .schedule-table {
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .schedule-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .schedule-table th {
+            background: var(--green-primary);
+            color: white;
+            padding: 16px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        .schedule-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--green-lightest);
+            font-size: 14px;
+        }
+
+        .schedule-table tr:hover td {
+            background: var(--green-lightest);
+        }
+
+        @media (max-width: 768px) {
+            .schedule-table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">
+            <svg viewBox="0 0 120 120" fill="none">
+                <circle cx="60" cy="60" r="55" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.1)"/>
+                <path d="M35 75 Q60 45 85 75" stroke="white" stroke-width="3" fill="none"/>
+                <path d="M40 70 Q60 50 80 70" stroke="white" stroke-width="2" fill="none" opacity="0.6"/>
+                <text x="60" y="55" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Մ.Ե.Մ</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="header-top-info">
+                    <span><i class="fas fa-map-marker-alt"></i> <span data-hy="Նոր-Նորք, Մոլդովական 24/7" data-ru="Нор-Норк, Молдовакан 24/7" data-en="Nor Nork, Moldovakan 24/7">որ-Նորք, Մոլդովական 24/7</span></span>
+                    <span><i class="fas fa-phone"></i> <a href="tel:+37477047947" style="color:white;text-decoration:none;">+374 77 047 947</a></span>
+                    <span><i class="fas fa-clock"></i> <span data-hy="Երկ-Ուրբ՝ 09:00-19:00" data-ru="Пн-Пт: 09:00-19:00" data-en="Mon-Fri: 09:00-19:00">Երկ-Ուրբ՝ 09:00-19:00</span></span>
+                </div>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="hy">ՀԱՅ</button>
+                    <button class="lang-btn" data-lang="ru">РУС</button>
+                    <button class="lang-btn" data-lang="en">ENG</button>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="logo-area" onclick="showPage('home')">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='95' fill='%2343A047' stroke='%232E7D32' stroke-width='3'/%3E%3Ccircle cx='100' cy='100' r='75' fill='%2366BB6A'/%3E%3Cpath d='M50 130 Q100 80 150 130' stroke='white' stroke-width='4' fill='none'/%3E%3Cpath d='M55 125 Q100 85 145 125' stroke='white' stroke-width='2.5' fill='none' opacity='0.7'/%3E%3Cpath d='M70 110 L80 70 L90 110' fill='white' opacity='0.8'/%3E%3Cpath d='M90 105 L100 60 L110 105' fill='white' opacity='0.9'/%3E%3Cpath d='M110 110 L120 75 L130 110' fill='white' opacity='0.8'/%3E%3Ccircle cx='75' cy='65' r='6' fill='white' opacity='0.7'/%3E%3Ccircle cx='100' cy='55' r='6' fill='white' opacity='0.8'/%3E%3Ccircle cx='125' cy='70' r='6' fill='white' opacity='0.7'/%3E%3Ctext x='100' y='155' text-anchor='middle' fill='white' font-size='11' font-weight='bold'%3EՄ..Մ%3C/text%3E%3C/svg%3E" alt="ԵՐՈՒՆ" class="logo-img">
+                    <div class="logo-text">
+                        <h1>ՄԵՐՈՒՆՔ</h1>
+                        <p data-hy="ԿՐԱԿԱՆ ԿԵՆՏՐՈՆ" data-ru="ОБРАЗОВАТЕЛЬНЫЙ ЦЕНТР" data-en="EDUCATIONAL CENTER">ԿՐԹԱԿԱՆ ԿԵՆՏՐՈՆ</p>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="nav-menu" id="navMenu">
+                        <li><a class="active" data-page="home" data-hy="Գլխավոր" data-ru="Главная" data-en="Home" onclick="showPage('home')">Գլխավոր</a></li>
+                        <li><a data-page="services" data-hy="Ծառայություններ" data-ru="Услуги" data-en="Services" onclick="showPage('services')">Ծառայություններ</a></li>
+                        <li><a data-page="team" data-hy="Մեր Թիմը" data-ru="Наша Команда" data-en="Our Team" onclick="showPage('team')">Մեր Թիմը</a></li>
+                        <li><a data-page="contact" data-hy="Կապ" data-ru="Контакты" data-en="Contact" onclick="showPage('contact')">Կապ</a></li>
+                        <li><a class="nav-cta" data-hy="Գրանցվել" data-ru="Записаться" data-en="Enroll Now" onclick="showPage('contact')">Գրանցվել</a></li>
+                    </ul>
+                </nav>
+                <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay" onclick="toggleMenu()"></div>
+
+    <!-- ==================== PAGE 1: HOME ==================== -->
+    <div class="page active" id="page-home">
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="hero-badge" data-hy="🎓 Կրթական Կենտրոն" data-ru="🎓 Образовательный Центр" data-en="🎓 Educational Center"> Կրթական Կենտրոն</div>
+                        <h2 data-hy="Ձեր երեխայի պայծառ ապագան սկսվում է այստեղից" data-ru="Светлое будущее вашего ребёнка начинается здесь" data-en="Your child's bright future starts here">Ձեր երեխայի պայծառ ապագան սկսվում է այստեղից</h2>
+                        <p data-hy="Մենք առաջարկում ենք որակյալ կրթություն 1-6-րդ դասարանի երեխաների համար՝ անհատական մոտեցմամբ և փոքր խմբերով" data-ru="Мы предлагаем качественное образование для детей 1-6 классов с индивидуальным подходом и малыми группами" data-en="We offer quality education for children in grades 1-6 with individual approach and small groups">Մենք առաջարկում ենք որակյալ կրթություն 1-6-րդ դասարանի երեխաների համար՝ անհատական մոտեցմամբ և փոքր խմբերով</p>
+                        <div class="hero-buttons">
+                            <a class="btn btn-primary" onclick="showPage('contact')" data-hy="Գրանցվել հիմա" data-ru="Записаться сейчас" data-en="Enroll Now">գրանցվել հիմա <i class="fas fa-arrow-right"></i></a>
+                            <a class="btn btn-outline" onclick="showPage('services')" data-hy="Իմանալ ավելին" data-ru="Узнать больше" data-en="Learn More">Իմանալ ավելին</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="hero-logo-large">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ccircle cx='150' cy='150' r='140' fill='%2343A047' stroke='rgba(255,255,255,0.3)' stroke-width='3'/%3E%3Ccircle cx='150' cy='150' r='110' fill='%2366BB6A'/%3E%3Cpath d='M70 195 Q150 120 230 195' stroke='white' stroke-width='6' fill='none'/%3E%3Cpath d='M80 188 Q150 128 220 188' stroke='white' stroke-width='3' fill='none' opacity='0.7'/%3E%3Cpath d='M100 170 L115 100 L130 170' fill='white' opacity='0.8'/%3E%3Cpath d='M130 162 L145 85 L160 162' fill='white' opacity='0.9'/%3E%3Cpath d='M160 170 L175 108 L190 170' fill='white' opacity='0.8'/%3E%3Ccircle cx='108' cy='92' r='9' fill='white' opacity='0.7'/%3E%3Ccircle cx='145' cy='78' r='9' fill='white' opacity='0.8'/%3E%3Ccircle cx='182' cy='98' r='9' fill='white' opacity='0.7'/%3E%3Ctext x='150' y='230' text-anchor='middle' fill='white' font-size='18' font-weight='bold'%3EՄ..Մ%3C/text%3E%3C/svg%3E" alt="ԵՐՈՒՆ Logo">
+                            <div class="hero-stats">
+                                <div class="stat-bubble">
+                                    <div class="number">5+</div>
+                                    <div class="label" data-hy="Տարի փորձ" data-ru="Лет опыта" data-en="Years exp.">Տարի փորձ</div>
+                                </div>
+                                <div class="stat-bubble">
+                                    <div class="number">100+</div>
+                                    <div class="label" data-hy="Աշակերտ" data-ru="Учеников" data-en="Students">Աշակերտ</div>
+                                </div>
+                                <div class="stat-bubble">
+                                    <div class="number">5</div>
+                                    <div class="label" data-hy="Մանկավարժ" data-ru="Педагогов" data-en="Teachers">Մանկավարժ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="overline" data-hy="Ինչու՞ ընտրել մեզ" data-ru="Почему выбирают нас" data-en="Why Choose Us">Ինչու՞ ընտրել մեզ</div>
+                    <h2 data-hy="Մեր առավելությունները" data-ru="Наши преимущества" data-en="Our Advantages">Մեր առավելությունները</h2>
+                    <p data-hy="Մենք ստեղծում ենք լավագույն պայմաններ ձեր երեխայի զարգացման համար" data-ru="Мы создаём лучшие условия для развития вашего ребёнка" data-en="We create the best conditions for your child's development">Մենք ստեղծում ենք ավագույն պայմաններ եր երեխայի զարգացման համար</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon"><i class="fas fa-user-graduate"></i></div>
+                        <h3 data-hy="Անհատական մոտեցում" data-ru="Индивидуальный подход" data-en="Individual Approach">Անհատական մոտեցում</h3>
+                        <p data-hy="Յուրաքանչյուր երեխա ստանում է անձնական ուշադրություն և հարմարեցված ուսումնական պլան" data-ru="Каждый ребёнок получает персональное внимание и адаптированный учебный план" data-en="Each child receives personal attention and an adapted learning plan">Յուրաքանչյուր երեխա ստանում է անձնական ուշադրություն և հարմարեցված ուսումնական պլան</p>
+                    </div>
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon"><i class="fas fa-users"></i></div>
+                        <h3 data-hy="Փոքր խմբեր" data-ru="Малые группы" data-en="Small Groups">Փոքր խմբեր</h3>
+                        <p data-hy="Փոքր խմբերը ապահովում են ավելի լավ ներգրավվածություն և արդյունավետ ուսուցում" data-ru="Малые группы обеспечивают лучшую вовлечённость и эффективное обучение" data-en="Small groups ensure better engagement and effective learning">Փոքր խմբերը ապահովում են ավելի լավ ներգրավվածություն և արդյունավետ ուսուցում</p>
+                    </div>
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3 data-hy="Դպրոցից կենտրոն ուղեկցում" data-ru="Сопровождение из школы в центр" data-en="School-to-Center Escort">Դպրոցից կենտրոն ուղեկցում</h3>
+                        <p data-hy="Անվտանգ ուղեկցում դպրոցից մեր կենտրոն և հետ" data-ru="Безопасное сопровождение из школы в наш центр и обратно" data-en="Safe escort from school to our center and back">Անվտանգ ուղեկցում դպրոցից մեր կենտրոն և հետ</p>
+                    </div>
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon"><i class="fas fa-apple-alt"></i></div>
+                        <h3 data-hy="Առողջ սնունդ" data-ru="Здоровое питание" data-en="Healthy Food">Առողջ սնունդ</h3>
+                        <p data-hy="Թարմ և սննդարար սնունդ երեխաների համար" data-ru="Свежая и питательная еда для детей" data-en="Fresh and nutritious food for children">արմ և սննդարար սնունդ երեխաների համար</p>
+                    </div>
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon"><i class="fas fa-clipboard-check"></i></div>
+                        <h3 data-hy="Քննությունների նախապատրաստում" data-ru="Подготовка к экзаменам" data-en="Exam Preparation">Քննությունների նախապատրաստում</h3>
+                        <p data-hy="Ավարտական դասարանների աշակերտների նախապատրաստում քննությունների" data-ru="Подготовка учеников выпускных классов к экзаменам" data-en="Preparing graduating class students for exams">Ավարտական դասարանների աշակերտների նախապատրաստում քննությունների</p>
+                    </div>
+                    <div class="feature-card animate-on-scroll">
+                        <div class="feature-icon"><i class="fas fa-language"></i></div>
+                        <h3 data-hy="Little English Club" data-ru="Little English Club" data-en="Little English Club">Little English Club</h3>
+                        <p data-hy="Անգլերենի ուսուցում 4-7 տարեկան երեխաների համար խաղային մեթոդով" data-ru="Обучение английскому для детей 4-7 лет игровым методом" data-en="English learning for children ages 4-7 through play-based methods">Անգլերենի ուսուցում 4-7 տարեկան երեխաների համար աղային մեթոդով</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Counter Section -->
+        <section class="counter-section">
+            <div class="container">
+                <div class="counter-grid">
+                    <div class="counter-item animate-on-scroll">
+                        <div class="count" data-target="100">0</div>
+                        <div class="count-label" data-hy="Աշակերտներ" data-ru="Учеников" data-en="Students">Աշակերտներ</div>
+                    </div>
+                    <div class="counter-item animate-on-scroll">
+                        <div class="count" data-target="5">0</div>
+                        <div class="count-label" data-hy="Մանկավարժներ" data-ru="Педагогов" data-en="Teachers">Մանկավարժներ</div>
+                    </div>
+                    <div class="counter-item animate-on-scroll">
+                        <div class="count" data-target="6">0</div>
+                        <div class="count-label" data-hy="Դասարաններ" data-ru="Классов" data-en="Grades">Դասարաններ</div>
+                    </div>
+                    <div class="counter-item animate-on-scroll">
+                        <div class="count" data-target="5">0</div>
+                        <div class="count-label" data-hy="Տարի փորձ" data-ru="Лет опыта" data-en="Years Experience">Տարի փորձ</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Little English Club -->
+        <section class="club-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="overline" data-hy="Հատուկ ծրագիր" data-ru="Специальная программа" data-en="Special Program">Հատուկ ծրագիր</div>
+                    <h2 data-hy="Little English Club" data-ru="Little English Club" data-en="Little English Club">Little English Club</h2>
+                </div>
+                <div class="club-card animate-on-scroll">
+                    <div class="club-visual">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="club-info">
+                        <h3 data-hy="Անգլերեն 4-7 տարեկանների համար" data-ru="Английский для детей 4-7 лет" data-en="English for ages 4-7">Անգլերեն 4-7 տարեկանների համար</h3>
+                        <p data-hy="Մեր Little English Club-ը նախատեսված է փոքրիկների համար՝ օգտագործելով խաղային և ինտերակտիվ մեթոդներ անգլերենի ուսուցման համար" data-ru="Наш Little English Club предназначен для малышей, используя игровые и интерактивные методы обучения английскому" data-en="Our Little English Club is designed for little ones, using play-based and interactive methods for English learning">Մեր Little English Club-ը նախատեսված է փոքրիկների համար՝ օգտագործելով խաղային և ինտերակտիվ մեթոդներ անգլերենի ուսուցման համար</p>
+                        <div class="club-features">
+                            <div class="club-feature"><i class="fas fa-check-circle"></i> <span data-hy="Խաղային մեթոդ" data-ru="Игровой метод" data-en="Play-based method">Խաղային մեթոդ</span></div>
+                            <div class="club-feature"><i class="fas fa-check-circle"></i> <span data-hy="Երգեր և պարեր" data-ru="Песни и танцы" data-en="Songs & dances">Երգեր և պարեր</span></div>
+                            <div class="club-feature"><i class="fas fa-check-circle"></i> <span data-hy="Փոքր խմբեր" data-ru="Малые группы" data-en="Small groups">Փոքր խմբեր</span></div>
+                            <div class="club-feature"><i class="fas fa-check-circle"></i> <span data-hy="Մասնագետ ուսուցիչ" data-ru="Специалист педагог" data-en="Expert teacher">Մասնագետ ուսուցիչ</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== PAGE 2: SERVICES ==================== -->
+    <div class="page" id="page-services">
+        <div class="page-hero">
+            <div class="container">
+                <h2 data-hy="Մեր ծառայությունները" data-ru="Наши Услуги" data-en="Our Services">Մեր Ծառայությունները</h2>
+                <p data-hy="Լիարժեք կրթական ծառայություններ ձեր երեխայի համար" data-ru="Полный спектр образовательных услуг для вашего ребёнка" data-en="Complete educational services for your child">իարժեք կրթական առայություններ ձեր երեխայի համար</p>
+            </div>
+        </div>
+
+        <section class="services-section">
+            <div class="container">
+                <div class="services-grid">
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-card-header">
+                            <i class="fas fa-school"></i>
+                            <h3 data-hy="1-6-րդ դասարանի դասապատրաստում" data-ru="Подготовка уроков 1-6 класс" data-en="Homework Help Grades 1-6">1-6-րդ դասարանի դասապատրաստում</h3>
+                        </div>
+                        <div class="service-card-body">
+                            <ul>
+                                <li><i class="fas fa-check"></i> <span data-hy="Բոլոր առարկաներից դասապատրաստում" data-ru="Подготовка по всем предметам" data-en="Homework help for all subjects">բոլոր առարկաներից դասապատրաստում</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Անհատական մոտեցում յուրաքանչյուր աշակերտի" data-ru="Индивидуальный подход к каждому ученику" data-en="Individual approach for each student">Անհատական մոտեցում յուրաքանչյուր աշակերտի</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Փոքր խմբեր (մինչև 8 երեխա)" data-ru="Малые группы (до 8 детей)" data-en="Small groups (up to 8 children)">Փոքր խմբեր (մինչև 8 երեխա)</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Գիտելիքների ամրապնդում" data-ru="Закрепление знаний" data-en="Knowledge reinforcement">Գիտելիքների ամրապնդում</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-card-header" style="background: linear-gradient(135deg, #2E7D32, #43A047);">
+                            <i class="fas fa-pen-fancy"></i>
+                            <h3 data-hy="Անհատական պարապմունքներ" data-ru="Индивидуальные занятия" data-en="Individual Lessons">Անհատական պարապմունքներ</h3>
+                        </div>
+                        <div class="service-card-body">
+                            <ul>
+                                <li><i class="fas fa-check"></i> <span data-hy="Բոլոր առարկաներից անհատական դասեր" data-ru="Индивидуальные уроки по всем предметам" data-en="Individual lessons for all subjects">Բոլոր առարկաներից անհատական դասեր</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Հարմարեցված ուսումնական պլան" data-ru="Адаптированный учебный план" data-en="Customized learning plan">Հարմարեցված ուսումնական պլան</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Թույլ կողմերի աշխատանք" data-ru="Работа над слабыми сторонами" data-en="Working on weak areas">Թույլ կողմերի աշխատանք</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Առաջադիմության հետևում" data-ru="Отслеживание прогресса" data-en="Progress tracking">Առաջադիմության հետևում</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-card-header" style="background: linear-gradient(135deg, #1B5E20, #388E3C);">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h3 data-hy="Քննությունների նախապատրաստում" data-ru="Подготовка к экзаменам" data-en="Exam Preparation">Քննությունների նախապատրաստում</h3>
+                        </div>
+                        <div class="service-card-body">
+                            <ul>
+                                <li><i class="fas fa-check"></i> <span data-hy="Ավարտական դասարանների քննություններ" data-ru="Экзамены выпускных классов" data-en="Graduating class exams">Ավարտական դասարանների քննություններ</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Թեստային աշխատանքներ" data-ru="Тестовые работы" data-en="Test exercises">Թեստային աշխատանքներ</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Ժամանակի կառավարում" data-ru="Управление временем" data-en="Time management">Ժամանակի կառավարում</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Հոգեբանական պատրաստություն" data-ru="Психологическая подготовка" data-en="Psychological preparation">Հոգեբանական պատրաստություն</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-card-header" style="background: linear-gradient(135deg, #33691E, #558B2F);">
+                            <i class="fas fa-bus-alt"></i>
+                            <h3 data-hy="Դպրոցից ուղեկցում" data-ru="Сопровождение из школы" data-en="School Escort">Դպրոցից ուղեկցում</h3>
+                        </div>
+                        <div class="service-card-body">
+                            <ul>
+                                <li><i class="fas fa-check"></i> <span data-hy="Անվտանգ ուղեկցում դպրոցից կենտրոն" data-ru="Безопасное сопровождение из школы в центр" data-en="Safe escort from school to center">Անվտանգ ուղեկցում դպրոցից կենտրոն</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Պատասխանատու ուղեկցողներ" data-ru="Ответственные сопровождающие" data-en="Responsible escorts">Պատասխանատու ուղեկցողներ</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Ծնողներին ծանուցում" data-ru="Уведомление родителей" data-en="Parent notification">Ծնողներին անուցում</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-card-header" style="background: linear-gradient(135deg, #4CAF50, #81C784);">
+                            <i class="fas fa-utensils"></i>
+                            <h3 data-hy="Առողջ սնունդ" data-ru="Здоровое питание" data-en="Healthy Food">Առողջ սնունդ</h3>
+                        </div>
+                        <div class="service-card-body">
+                            <ul>
+                                <li><i class="fas fa-check"></i> <span data-hy="Թարմ և բնական մթերքներ" data-ru="Свежие и натуральные продукты" data-en="Fresh and natural products">Թարմ և բնական մթերքներ</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Հավասարակշռված սննդակարգ" data-ru="Сбалансированное питание" data-en="Balanced diet">Հավասարակշռված սննդակարգ</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Ալերգիաների հաշվառում" data-ru="Учёт аллергий" data-en="Allergy consideration">Ալերգիաների հաշվառում</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-card-header" style="background: linear-gradient(135deg, #2E7D32, #66BB6A);">
+                            <i class="fas fa-globe-americas"></i>
+                            <h3 data-hy="Little English Club (4-7 տարեկան)" data-ru="Little English Club (4-7 лет)" data-en="Little English Club (ages 4-7)">Little English Club (4-7 տարեկան)</h3>
+                        </div>
+                        <div class="service-card-body">
+                            <ul>
+                                <li><i class="fas fa-check"></i> <span data-hy="Խաղային ուսուցման մեթոդ" data-ru="Игровой метод обучения" data-en="Play-based learning method">Խաղային ուսուցման մեթոդ</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Անգլերեն երգեր և պարեր" data-ru="Английские песни и танцы" data-en="English songs and dances">Անգլերեն երգեր և պարեր</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Խոսակցական հմտություններ" data-ru="Разговорные навыки" data-en="Speaking skills">Խոսակցական հմտություններ</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Ստեղծագործական աշխատանքներ" data-ru="Творческие задания" data-en="Creative activities">Ստեղծագործական աշխատանքներ</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule -->
+        <section class="schedule-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="overline" data-hy="Ժամանակացույց" data-ru="Расписание" data-en="Schedule">Ժամանակացույց</div>
+                    <h2 data-hy="Դասերի ժամանակացույց" data-ru="Расписание занятий" data-en="Class Schedule">Դասերի ժամանակացույց</h2>
+                </div>
+                <div class="schedule-table animate-on-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-hy="Ծրագիր" data-ru="Программа" data-en="Program">Ծրագիր</th>
+                                <th data-hy="Տարիք/Դասարան" data-ru="Возраст/Класс" data-en="Age/Grade">Տարիք/Դասարան</th>
+                                <th data-hy="Օրեր" data-ru="Дни" data-en="Days">Օրեր</th>
+                                <th data-hy="Ժամ" data-ru="Время" data-en="Time">Ժամ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-hy="Դասապատրաստում" data-ru="Подготовка уроков" data-en="Homework Help">Դասապատրաստում</td>
+                                <td data-hy="1-6 դասարան" data-ru="1-6 класс" data-en="Grades 1-6">1-6 դասարան</td>
+                                <td data-hy="Երկ-Ուրբ" data-ru="Пн-Пт" data-en="Mon-Fri">Երկ-Ուրբ</td>
+                                <td>14:00 - 18:00</td>
+                            </tr>
+                            <tr>
+                                <td data-hy="Անհատական պարապմունք" data-ru="Индивидуальные занятия" data-en="Individual Lessons">Անհատական պարապմունք</td>
+                                <td data-hy="Բոլոր դասարաններ" data-ru="Все классы" data-en="All grades">Բոլոր դասարաններ</td>
+                                <td data-hy="Երկ-Շաբ" data-ru="Пн-Сб" data-en="Mon-Sat">Երկ-Շաբ</td>
+                                <td data-hy="Ըստ պայմանավորվածության" data-ru="По договорённости" data-en="By appointment">Ըստ պայմանավորվածության</td>
+                            </tr>
+                            <tr>
+                                <td data-hy="Քննությունների նախապատրաստում" data-ru="Подготовка к экзаменам" data-en="Exam Prep">Քննությունների նախապատրաստում</td>
+                                <td data-hy="4-6 դասարան" data-ru="4-6 класс" data-en="Grades 4-6">4-6 դասարան</td>
+                                <td data-hy="Երկ-Ուրբ" data-ru="Пн-Пт" data-en="Mon-Fri">Երկ-Ուրբ</td>
+                                <td>16:00 - 19:00</td>
+                            </tr>
+                            <tr>
+                                <td>Little English Club</td>
+                                <td data-hy="4-7 տարեկան" data-ru="4-7 лет" data-en="Ages 4-7">4-7 տարեկան</td>
+                                <td data-hy="Երք-Ուրբ-Ուրբ" data-ru="Вт-Чт" data-en="Tue-Thu">Երք-Ուրբ</td>
+                                <td>15:00 - 16:30</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== PAGE 3: TEAM ==================== -->
+    <div class="page" id="page-team">
+        <div class="page-hero">
+            <div class="container">
+                <h2 data-hy="Մեր Թիմը" data-ru="Наша Команда" data-en="Our Team">Մեր Թիմը</h2>
+                <p data-hy="Մասնագիտացված և փորձառու մանկավարժներ" data-ru="Специализированные и опытные педагоги" data-en="Specialized and experienced educators">Մասնագիտացված և փորձառու մանկավարժներ</p>
+            </div>
+        </div>
+
+        <!-- Director -->
+        <section class="director-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="overline" data-hy="Ղեկավարություն" data-ru="Руководство" data-en="Leadership">Ղեկավարություն</div>
+                    <h2 data-hy="Հիմնադիր Տնօրեն" data-ru="Основатель и Директор" data-en="Founder & Director">Հիմնադիր Տնօրեն</h2>
+                </div>
+                <div class="director-card animate-on-scroll">
+                    <div class="director-photo">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="director-info">
+                        <h3 data-hy="[Անուն Ազգանուն]" data-ru="[Имя Фамилия]" data-en="[Name Surname]">[Անուն Ազգանուն]</h3>
+                        <div class="title" data-hy="Հիմնադիր Տնօրեն" data-ru="Основатель и Директор" data-en="Founder & Director">Հիմնադիր Տնօրեն</div>
+                        <p data-hy="Մեր կենտրոնի հիմնադիրը և տնօրենը բազմամյա փորձ ունի կրթության ոլորտում: Նրա առաքելությունն է ապահովել որակյալ և մատչելի կրթություն յուրաքանչյուր երեխայի համար:" data-ru="Основатель и директор нашего центра имеет многолетний опыт в сфере образования. Его миссия — обеспечить качественное и доступное образование для каждого ребёнка." data-en="The founder and director of our center has many years of experience in education. Their mission is to provide quality and accessible education for every child.">Մեր կենտրոնի հիմնադիրը և տնօրենը բազմամյա փորձ ունի կրթության ոլորտում: Նրա առաքելությունն է ապահովել որակյալ և մատչելի կրթություն յուրաքանչյուր երեխայի համար:</p>
+                        <div class="director-quote" data-hy="«Յուրաքանչյուր երեխա տաղանդավոր է: Մեր խնդիրն է օգնել նրանց բացահայտել իրենց ներուժը»" data-ru="«Каждый ребёнок талантлив. Наша задача — помочь им раскрыть свой потенциал»" data-en="&quot;Every child is talented. Our task is to help them unlock their potential&quot;">«Յուրաքանչյուր երեխա տաղանդավոր է: Մեր խնդիրն է օգնել նրանց բացահայտել իրենց ներուժը»</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deputy Director -->
+        <section class="director-section" style="background: var(--green-lightest);">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="overline" data-hy="նօրեն" data-ru="Директор" data-en="Director">նօրեն</div>
+                    <h2 data-hy="Կրթական Տնօրեն" data-ru="Академический Директор" data-en="Academic Director">Կրթական Տնօրեն</h2>
+                </div>
+                <div class="director-card animate-on-scroll" style="background: white;">
+                    <div class="director-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="director-info">
+                        <h3 data-hy="[Անուն Ազգանուն]" data-ru="[Имя Фамилия]" data-en="[Name Surname]">[Անուն Ազգանուն]</h3>
+                        <div class="title" data-hy="Տնրեն" data-ru="Директор" data-en="Director">Տնօրեն</div>
+                        <p data-hy="Կրթական տնօրենը պատասխանատու է ուսումնական ծրագրերի որակի և մանկավարժների աշխատանքի կազմակերպման համար:" data-ru="Академический директор отвечает за качество учебных программ и организацию работы педагогов." data-en="The academic director is responsible for the quality of educational programs and the organization of teachers' work.">րթական տնօրենը պատասխանատու է ուսումնական ծրագրերի որակի և մանկավարժների աշխատանքի կազմակերպման համար:</p>
+                        <div class="director-quote" data-hy="«Կրթությունը ամենաարժեքավոր նվերն է, որ կարող ենք տալ մեր երեխաներին»" data-ru="«Образование — самый ценный подарок, который мы можем дать нашим детям»" data-en="&quot;Education is the most valuable gift we can give our children&quot;">«Կրթությունը ամենաարժեքավոր նվերն է, որ կարող ենք տալ մեր երեխաներին»</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teachers -->
+        <section class="teachers-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="overline" data-hy="Մանկավարժներ" data-ru="Педагоги" data-en="Teachers">Մանկավարժներ</div>
+                    <h2 data-hy="Մեր Մանկավարժները" data-ru="Наши Педагоги" data-en="Our Teachers">Մեր Մանկավարները</h2>
+                    <p data-hy="Փորձառու և նվիրյալ մասնագետներ" data-ru="Опытные и преданные специалисты" data-en="Experienced and dedicated professionals">Փորձառու և նվիրյալ մասնագետներ</p>
+                </div>
+                <div class="teachers-grid">
+                    <div class="teacher-card animate-on-scroll">
+                        <div class="teacher-photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h4 data-hy="[Անուն Ազգանուն]" data-ru="[Имя Фамилия]" data-en="[Name Surname]">[Անուն Ազգանուն]</h4>
+                            <div class="role" data-hy="Մանկավարժ" data-ru="Педагог" data-en="Teacher">անկավարժ</div>
+                            <div class="subject" data-hy="Մաթեմատիկա" data-ru="Математика" data-en="Mathematics">Մաթեմատիկա</div>
+                        </div>
+                    </div>
+                    <div class="teacher-card animate-on-scroll">
+                        <div class="teacher-photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h4 data-hy="[Անուն Ազգանուն]" data-ru="[Имя Фамилия]" data-en="[Name Surname]">[Անուն Ազգանուն]</h4>
+                            <div class="role" data-hy="Մանկավարժ" data-ru="Педагог" data-en="Teacher">Մանկավարժ</div>
+                            <div class="subject" data-hy="Հայոց լեզու և գրականություն" data-ru="Армянский язык и литература" data-en="Armenian Language & Literature">Հայոց լեզու և գրականություն</div>
+                        </div>
+                    </div>
+                    <div class="teacher-card animate-on-scroll">
+                        <div class="teacher-photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h4 data-hy="[Անուն Ազգանուն]" data-ru="[Имя Фамилия]" data-en="[Name Surname]">[Անուն Ազգանուն]</h4>
+                            <div class="role" data-hy="Մանկավարժ" data-ru="Педагог" data-en="Teacher">Մանկավարժ</div>
+                            <div class="subject" data-hy="Անգլերեն" data-ru="Английский язык" data-en="English Language">Անգլերեն</div>
+                        </div>
+                    </div>
+                    <div class="teacher-card animate-on-scroll">
+                        <div class="teacher-photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h4 data-hy="[Անուն Ազգանուն]" data-ru="[Имя Фамилия]" data-en="[Name Surname]">[Անուն Ազգանուն]</h4>
+                            <div class="role" data-hy="Մանկավարժ" data-ru="Педагог" data-en="Teacher">Մանկավարժ</div>
+                            <div class="subject" data-hy="Բնագիտություն" data-ru="Естествознание" data-en="Natural Science">Բնագիտություն</div>
+                        </div>
+                    </div>
+                    <div class="teacher-card animate-on-scroll">
+                        <div class="teacher-photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h4 data-hy="[Անուն Ազգանուն]" data-ru="[Имя Фамилия]" data-en="[Name Surname]">[Անուն Ազգանուն]</h4>
+                            <div class="role" data-hy="Մանկավարժ" data-ru="Педагог" data-en="Teacher">Մանկավարժ</div>
+                            <div class="subject" data-hy="Ռուսաց լեզու" data-ru="Русский язык" data-en="Russian Language">Ռուսաց լեզու</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== PAGE 4: CONTACT ==================== -->
+    <div class="page" id="page-contact">
+        <div class="page-hero">
+            <div class="container">
+                <h2 data-hy="Կապ Մեզ Հետ" data-ru="Свяжитесь с Нами" data-en="Contact Us">Կապ Մեզ Հետ</h2>
+                <p data-hy="Մենք սիրով կպատասխանենք ձեր բոլոր հարցերին" data-ru="Мы с радостью ответим на все ваши вопросы" data-en="We'll happily answer all your questions">Մենք սիրով կպատասխանենք ձեր բոլոր հարցերին</p>
+            </div>
+        </div>
+
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info-cards">
+                        <div class="contact-card animate-on-scroll">
+                            <div class="contact-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="contact-card-text">
+                                <h4 data-hy="Հասցե" data-ru="Адрес" data-en="Address">Հասցե</h4>
+                                <p data-hy="որ-Նորք, Մոլդովական 24/7" data-ru="Нор-Норк, Молдовакан 24/7" data-en="Nor Nork, Moldovakan 24/7">Նոր-Նորք, Մոլդովական 24/7</p>
+                            </div>
+                        </div>
+                        <div class="contact-card animate-on-scroll">
+                            <div class="contact-card-icon"><i class="fas fa-phone-alt"></i></div>
+                            <div class="contact-card-text">
+                                <h4 data-hy="Հեռախոս" data-ru="Телефон" data-en="Phone">Հեռախոս</h4>
+                                <p><a href="tel:+37477047947">+374 77 047 947</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-card animate-on-scroll">
+                            <div class="contact-card-icon"><i class="fas fa-clock"></i></div>
+                            <div class="contact-card-text">
+                                <h4 data-hy="Աշխատանքային ամեր" data-ru="Рабочие часы" data-en="Working Hours">Աշխատանքային ժամեր</h4>
+                                <p data-hy="Երկ-Ուրբ 09:00 - 19:00" data-ru="Пн-Пт: 09:00 - 19:00" data-en="Mon-Fri: 09:00 - 19:00">Երկ-Ուրբ 09:00 - 19:00</p>
+                            </div>
+                        </div>
+                        <div class="contact-card animate-on-scroll">
+                            <div class="contact-card-icon"><i class="fab fa-whatsapp"></i></div>
+                            <div class="contact-card-text">
+                                <h4>WhatsApp</h4>
+                                <p><a href="https://wa.me/37477047947">+374 77 047 947</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-card animate-on-scroll">
+                            <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="contact-card-text">
+                                <h4 data-hy="լ. հասցե" data-ru="Email" data-en="Email">լ. հասցե</h4>
+                                <p><a href="mailto:info@merunk.am">info@merunk.am</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-wrapper animate-on-scroll">
+                        <h3 data-hy="Գրանցվել / Կապվել" data-ru="Записаться / Связаться" data-en="Enroll / Contact Us">Գրանցվել / Կապվել</h3>
+                        <form id="contactForm" onsubmit="handleSubmit(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label data-hy="Ծնողի անուն" data-ru="Имя родителя" data-en="Parent's Name">Ծնողի անուն</label>
+                                    <input type="text" required placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label data-hy="Հեռախոս" data-ru="Телефон" data-en="Phone">Հեռախոս</label>
+                                    <input type="tel" required placeholder="+374 __ ___ ___">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label data-hy="Երեխայի անուն" data-ru="Имя ребёнка" data-en="Child's Name">րեխայի անուն</label>
+                                    <input type="text" required placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label data-hy="Դասարան / Տարիք" data-ru="Класс / Возраст" data-en="Grade / Age">Դասարան / Տարիք</label>
+                                    <select required>
+                                        <option value="" data-hy="Ընտրել" data-ru="Выбрать" data-en="Select">Ընտրել</option>
+                                        <option value="little" data-hy="Little English Club (4-7)" data-ru="Little English Club (4-7)" data-en="Little English Club (4-7)">Little English Club (4-7)</option>
+                                        <option value="1" data-hy="1-ին դասարան" data-ru="1 класс" data-en="Grade 1">1-ին դասարան</option>
+                                        <option value="2" data-hy="2-րդ դասարան" data-ru="2 класс" data-en="Grade 2">2-րդ դասարան</option>
+                                        <option value="3" data-hy="3-րդ դասարան" data-ru="3 класс" data-en="Grade 3">3-րդ դասարան</option>
+                                        <option value="4" data-hy="4-րդ դասարան" data-ru="4 класс" data-en="Grade 4">4-րդ դասարան</option>
+                                        <option value="5" data-hy="5-րդ դասարան" data-ru="5 класс" data-en="Grade 5">5-րդ դասարան</option>
+                                        <option value="6" data-hy="6-րդ դասարան" data-ru="6 класс" data-en="Grade 6">6-րդ դասարան</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label data-hy="Ծրագիր" data-ru="Программа" data-en="Program">Ծրագիր</label>
+                                <select required>
+                                    <option value="" data-hy="Ընտրել ծրագիրը" data-ru="Выбрать программу" data-en="Select program">Ընտրել ծրագիրը</option>
+                                    <option value="homework" data-hy="Դասապատրաստում" data-ru="Подготовка уроков" data-en="Homework Help">Դասապատրաստում</option>
+                                    <option value="individual" data-hy="Անհատական պարապմունք" data-ru="Индивидуальные занятия" data-en="Individual Lessons">Անհատական պարապմունք</option>
+                                    <option value="exam" data-hy="Քննությունների նախապատրաստում" data-ru="Подготовка к экзаменам" data-en="Exam Preparation">Քննությունների նախապատրաստում</option>
+                                    <option value="english" data-hy="Little English Club" data-ru="Little English Club" data-en="Little English Club">Little English Club</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-hy="Հաղորդագրություն" data-ru="Сообщение" data-en="Message">Հաղորդագրություն</label>
+                                <textarea placeholder=""></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-green" style="width:100%;justify-content:center;" data-hy="Ուղարկել հայտը" data-ru="Отправить заявку" data-en="Submit Application">Ուղարկել հայտը <i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map -->
+        <section class="map-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="overline" data-hy="Մեր գտնվելու վայրը" data-ru="Наше местоположение" data-en="Our Location">Մեր գտնվելու վայրը</div>
+                    <h2 data-hy="Ինչպես գտնել մեզ" data-ru="Как нас найти" data-en="How to Find Us">Ինչպես գտնել մեզ</h2>
+                </div>
+                <div class="map-container animate-on-scroll">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3047.123456789!2d44.5456!3d40.2089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDEyJzMyLjAiTiA0NMKwMzInNDQuMCJF!5e0!3m2!1sen!2sam!4v1234567890" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-area" onclick="showPage('home')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='95' fill='%2343A047' stroke='%232E7D32' stroke-width='3'/%3E%3Ccircle cx='100' cy='100' r='75' fill='%2366BB6A'/%3E%3Cpath d='M50 130 Q100 80 150 130' stroke='white' stroke-width='4' fill='none'/%3E%3Cpath d='M70 110 L80 70 L90 110' fill='white' opacity='0.8'/%3E%3Cpath d='M90 105 L100 60 L110 105' fill='white' opacity='0.9'/%3E%3Cpath d='M110 110 L120 75 L130 110' fill='white' opacity='0.8'/%3E%3Ccircle cx='75' cy='65' r='6' fill='white' opacity='0.7'/%3E%3Ccircle cx='100' cy='55' r='6' fill='white' opacity='0.8'/%3E%3Ccircle cx='125' cy='70' r='6' fill='white' opacity='0.7'/%3E%3Ctext x='100' y='155' text-anchor='middle' fill='white' font-size='11' font-weight='bold'%3EՄ.Ե.Մ%3C/text%3E%3C/svg%3E" alt="ԵՐՈՒՆ" class="logo-img">
+                        <div class="logo-text">
+                            <h1>ՄԵՐՈՒՆՔ</h1>
+                            <p data-hy="ԿՐԹԱԿԱՆ ԿԵՆՐՈՆ" data-ru="ОБРАЗОВАТЕЛЬНЫЙ ЦЕНТР" data-en="EDUCATIONAL CENTER">ՐԹԱԿԱ ԿԵՆՏՐՈՆ</p>
+                        </div>
+                    </div>
+                    <p data-hy="Մենք առաջարկում ենք որակյալ կրթություն և արգացման հնարավորություններ ձեր երեխաների համար:" data-ru="Мы предлагаем качественное образование и возможности развития для ваших детей." data-en="We offer quality education and development opportunities for your children.">Մենք առաջարկում ենք որակյալ կրթություն և զարգացման հնարավորություններ ձեր երեխաների համար:</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/37477047947"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-telegram-plane"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4 data-hy="Նավիգացիա" data-ru="Навигация" data-en="Navigation">Նավիգացիա</h4>
+                    <ul>
+                        <li><a onclick="showPage('home')" data-hy="Գլխավոր" data-ru="Главная" data-en="Home">Գլխավոր</a></li>
+                        <li><a onclick="showPage('services')" data-hy="Ծառայություններ" data-ru="Услуги" data-en="Services">Ծառայություններ</a></li>
+                        <li><a onclick="showPage('team')" data-hy="Մեր Թիմը" data-ru="Наша Команда" data-en="Our Team">Մեր Թիմը</a></li>
+                        <li><a onclick="showPage('contact')" data-hy="Կապ" data-ru="Контакты" data-en="Contact">Կապ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 data-hy="Ծառայություններ" data-ru="Услуги" data-en="Services">Ծառայություններ</h4>
+                    <ul>
+                        <li><a data-hy="Դասապատրաստում" data-ru="Подготовка уроков" data-en="Homework Help">Դասապատրաստում</a></li>
+                        <li><a data-hy="Անհատական դասեր" data-ru="Индивидуальные уроки" data-en="Individual Lessons">Անհատական դասեր</a></li>
+                        <li><a data-hy="Քննությունների նախապատրաստում" data-ru="Подготовка к экзаменам" data-en="Exam Prep">Քննությունների նախապատրաստում</a></li>
+                        <li><a>Little English Club</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 data-hy="Կապ" data-ru="Контакты" data-en="Contact">Կապ</h4>
+                    <ul>
+                        <li><a><i class="fas fa-map-marker-alt"></i> <span data-hy="Նոր-Նորք, Մոլդովական 24/7" data-ru="Нор-Норк, Молдовакан 24/7" data-en="Nor Nork, Moldovakan 24/7">Նոր-որք, Մոլդովական 24/7</span></a></li>
+                        <li><a href="tel:+37477047947"><i class="fas fa-phone"></i> +374 77 047 947</a></li>
+                        <li><a href="mailto:info@merunk.am"><i class="fas fa-envelope"></i> info@merunk.am</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 ՍԵՐունդ Կրթական Կենտրոն. <span data-hy="Բոլոր իրավունքները պաշտպանված են" data-ru="Все права защищены" data-en="All rights reserved">Բոլոր իրավունքները պաշտպանված են</span>.</p>
+                <p data-hy="Ստեղծված է սիրով ❤️" data-ru="Создано с любовью ❤️" data-en="Made with love ❤️">Ստեղծված է սիրով ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/37477047947" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // ===== PRELOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // ===== PAGE NAVIGATION =====
+        let currentLang = 'hy';
+
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // Show target page
+            document.getElementById('page-' + pageId).classList.add('active');
+
+            // Update nav active state
+            document.querySelectorAll('.nav-menu a[data-page]').forEach(a => {
+                a.classList.remove('active');
+                if (a.dataset.page === pageId) a.classList.add('active');
+            });
+
+            // Close mobile menu
+            document.getElementById('navMenu').classList.remove('open');
+            document.getElementById('hamburger').classList.remove('active');
+            document.getElementById('navOverlay').classList.remove('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Re-trigger animations
+            setTimeout(() => {
+                initScrollAnimations();
+                if (pageId === 'home') initCounters();
+            }, 300);
+        }
+
+        // ===== MOBILE MENU =====
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('open');
+            document.getElementById('hamburger').classList.toggle('active');
+            document.getElementById('navOverlay').classList.toggle('active');
+        }
+
+        // ===== LANGUAGE SWITCHER =====
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                currentLang = lang;
+
+                // Update active button
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update all translatable elements
+                document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+                    const text = el.getAttribute('data-' + lang);
+                    if (text) {
+                        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                            el.placeholder = text;
+                        } else {
+                            el.textContent = text;
+                        }
+                    }
+                });
+
+                // Update HTML lang attribute
+                document.documentElement.lang = lang === 'hy' ? 'hy' : lang === 'ru' ? 'ru' : 'en';
+            });
+        });
+
+        // ===== HEADER SCROLL =====
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            const scrollTop = document.getElementById('scrollTop');
+
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            if (window.scrollY > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        // ===== SCROLL ANIMATIONS =====
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('animated');
+                        }, index * 100);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                if (!el.classList.contains('animated')) {
+                    observer.observe(el);
+                }
+            });
+        }
+
+        // ===== COUNTER ANIMATION =====
+        function initCounters() {
+            const counters = document.querySelectorAll('.count[data-target]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.dataset.target);
+                        let current = 0;
+                        const increment = target / 60;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                counter.textContent = target + '+';
+                                clearInterval(timer);
+                            } else {
+                                counter.textContent = Math.floor(current) + '+';
+                            }
+                        }, 30);
+                        observer.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(c => observer.observe(c));
+        }
+
+        // ===== FORM SUBMISSION =====
+        function handleSubmit(e) {
+            e.preventDefault();
+
+            const messages = {
+                hy: 'Շնորհակալություն! Մեր հայտը հաջողությամբ ուղարկվեց: Մենք կկապվենք ձեզ հետ շուտով:',
+                ru: 'Спасибо! Ваша заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.',
+                en: 'Thank you! Your application has been submitted successfully. We will contact you soon.'
+            };
+
+            alert(messages[currentLang]);
+            e.target.reset();
+        }
+
+        // ===== INITIALIZE =====
+        document.addEventListener('DOMContentLoaded', () => {
+            initScrollAnimations();
+            initCounters();
+        });
+
+        // ===== SMOOTH PAGE TRANSITIONS =====
+        document.querySelectorAll('a[onclick]').forEach(link => {
+            link.style.cursor = 'pointer';
+        });
+    </script>
+</body>
+</html>
