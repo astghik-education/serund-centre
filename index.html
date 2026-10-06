@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="hy">
 <head>
@@ -518,7 +517,7 @@
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <div class="hero-badge" data-hy="🎓 Կրթական Կենտրոն" data-ru=" Образовательный Центр" data-en=" Educational Center">🎓 Կրթական Կենտրոն</div>
+                        <div class="hero-badge" data-hy="🎓 Կրթական Կենտրոն" data-ru="🎓 Образовательный Центр" data-en="🎓 Educational Center">🎓 Կրթական Կենտրոն</div>
                         <h2 data-hy="Ձեր երեխայի պայծառ ապագան սկսվում է այստեղից" data-ru="Светлое будущее вашего ребёнка начинается здесь" data-en="Your child's bright future starts here">Ձեր երեխայի պայծառ ապագան սկսվում է այստեղից</h2>
                         <p data-hy="Մենք առաջարկում ենք որակյալ կրթություն 1-6-րդ դասարանի երեխաների համար՝ անհատական մոտեցմամբ և փոքր խմբերով" data-ru="Мы предлагаем качественное образование для детей 1-6 классов с индивидуальным подходом и малыми группами" data-en="We offer quality education for children in grades 1-6 with individual approach and small groups">Մենք առաջարկում ենք որակյալ կրթություն 1-6-րդ դասարանի երեխաների համար՝ անհատական մոտեցմամբ և փոքր խմբերով</p>
                         <div class="hero-buttons">
@@ -582,6 +581,42 @@
             </div>
         </section>
 
+        <!-- ===== NEW: SAFE GALLERY SECTION ===== -->
+        <section class="gallery-section" style="padding: 80px 0; background: var(--gray-light);">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="overline" data-hy="Պատկերասրահ" data-ru="Галерея" data-en="Gallery">Պատկերասրահ</div>
+                    <h2 data-hy="Մեր Կենտրոնից Լուսանկարներ" data-ru="Фотографии из нашего центра" data-en="Photos from Our Center">Մեր Կենտրոնից Լուսանկարներ</h2>
+                    <p data-hy="Ծանոթացեք մեր դասարաններին, միջոցառումներին և ուրախ պահերին" data-ru="Познакомьтесь с нашими классами, мероприятиями и радостными моментами" data-en="Get to know our classrooms, events, and joyful moments">Ծանոթացեք մեր դասարաններին, միջոցառումներին և ուրախ պահերին</p>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <!-- Photo 1: Classroom -->
+                    <div class="animate-on-scroll" style="border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 4/3; background: var(--green-lighter); display: flex; align-items: center; justify-content: center;">
+                        <img src="classroom.jpg" alt="Դասարան" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-chalkboard-teacher\' style=\'font-size: 50px; color: var(--green-primary); opacity: 0.5;\'></i>'" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    </div>
+                    <!-- Photo 2: Activity (SAFE BLUR EFFECT for children) -->
+                    <div class="animate-on-scroll" style="border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 4/3; background: var(--green-lighter); display: flex; align-items: center; justify-content: center; position: relative;">
+                        <img src="activity.jpg" alt="Պարապմունք" style="width: 100%; height: 100%; object-fit: cover; filter: blur(5px); transition: filter 0.4s, transform 0.4s;" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-paint-brush\' style=\'font-size: 50px; color: var(--green-primary); opacity: 0.5;\'></i>'" onmouseover="this.style.filter='blur(0)'; this.style.transform='scale(1.05)'" onmouseout="this.style.filter='blur(5px)'; this.style.transform='scale(1)'">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(46,125,50,0.8); color: white; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;">
+                            <i class="fas fa-shield-alt"></i> 
+                        </div>
+                    </div>
+                    <!-- Photo 3: Event -->
+                    <div class="animate-on-scroll" style="border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 4/3; background: var(--green-lighter); display: flex; align-items: center; justify-content: center;">
+                        <img src="event.jpg" alt="Միջոցառում" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-star\' style=\'font-size: 50px; color: var(--green-primary); opacity: 0.5;\'></i>'" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    </div>
+                    <!-- Photo 4: Materials -->
+                    <div class="animate-on-scroll" style="border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 4/3; background: var(--green-lighter); display: flex; align-items: center; justify-content: center;">
+                        <img src="materials.jpg" alt="Ուսումնական նյութեր" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-book\' style=\'font-size: 50px; color: var(--green-primary); opacity: 0.5;\'></i>'" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 25px; font-size: 13px; color: var(--gray); background: var(--green-lightest); padding: 12px; border-radius: 10px; display: inline-block; width: 100%;">
+                    <i class="fas fa-info-circle" style="color: var(--green-primary);"></i> 
+                    <span data-hy="Երեխաների նկարները հրապարակվում են միայն ծնողների գրավոր համաձայնությամբ:" data-ru="Фотографии детей публикуются только с письменного согласия родителей." data-en="Children's photos are published only with written parental consent.">Երեխաների նկարները հրապարակվում են միայն ծնողների գրավոր համաձայնությամբ:</span>
+                </p>
+            </div>
+        </section>
+
         <section class="counter-section">
             <div class="container">
                 <div class="counter-grid">
@@ -603,7 +638,7 @@
                     <div class="club-visual"><i class="fas fa-book-open"></i></div>
                     <div class="club-info">
                         <h3 data-hy="Անգլերեն 4-7 տարեկանների համար" data-ru="Английский для детей 4-7 лет" data-en="English for ages 4-7">Անգլերեն 4-7 տարեկանների համար</h3>
-                        <p data-hy="Մեր Little English Club-ը նախատեսված է փոքրիկների համար՝ օգտագործելով խաղային և ինտերակտիվ մեթոդներ անգլերենի ուսուցման համար" data-ru="Наш Little English Club предназначен для малышей, используя игровые и интерактивные методы обучения английскому" data-en="Our Little English Club is designed for little ones, using play-based and interactive methods for English learning">եր Little English Club-ը նախատեսված է փոքրիկների համար՝ օգտագործելով խաղային և ինտերակտիվ մեթոդներ անգլերենի ուսուցման համար</p>
+                        <p data-hy="Մեր Little English Club-ը նախատեսված է փոքրիկների համար՝ օգտագործելով խաղային և ինտերակտիվ մեթոդներ անգլերենի ուսուցման համար" data-ru="Наш Little English Club предназначен для малышей, используя игровые и интерактивные методы обучения английскому" data-en="Our Little English Club is designed for little ones, using play-based and interactive methods for English learning">Մեր Little English Club-ը նախատեսված է փոքրիկների համար՝ օգտագործելով խաղային և ինտերակտիվ մեթոդներ անգլերենի ուսուցման համար</p>
                         <div class="club-features">
                             <div class="club-feature"><i class="fas fa-check-circle"></i> <span data-hy="Խաղային մեթոդ" data-ru="Игровой метод" data-en="Play-based method">Խաղային մեթոդ</span></div>
                             <div class="club-feature"><i class="fas fa-check-circle"></i> <span data-hy="Երգեր և պարեր" data-ru="Песни и танцы" data-en="Songs & dances">Երգեր և պարեր</span></div>
@@ -633,9 +668,9 @@
                         <div class="service-card-body">
                             <ul>
                                 <li><i class="fas fa-check"></i> <span data-hy="Բոլոր առարկաներից դասապատրաստում" data-ru="Подготовка по всем предметам" data-en="Homework help for all subjects">Բոլոր առարկաներից դասապատրաստում</span></li>
-                                <li><i class="fas fa-check"></i> <span data-hy="Անհատական մոտեցում ուրաքանչյուր աշակերտի" data-ru="Индивидуальный подход к каждому ученику" data-en="Individual approach for each student">Անհատական մոտեցում յուրաքանչյուր աշակերտի</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Անհատական մոտեցում յուրաքանչյուր աշակերտի" data-ru="Индивидуальный подход к каждому ученику" data-en="Individual approach for each student">Անհատական մոտեցում յուրաքանչյուր աշակերտի</span></li>
                                 <li><i class="fas fa-check"></i> <span data-hy="Փոքր խմբեր (մինչև 8 երեխա)" data-ru="Малые группы (до 8 детей)" data-en="Small groups (up to 8 children)">Փոքր խմբեր (մինչև 8 երեխա)</span></li>
-                                <li><i class="fas fa-check"></i> <span data-hy="Գիտելիքների ամրապնդում" data-ru="Закрепление знаний" data-en="Knowledge reinforcement">իտելիքների ամրապնդում</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Գիտելիքների ամրապնդում" data-ru="Закрепление знаний" data-en="Knowledge reinforcement">Գիտելիքների ամրապնդում</span></li>
                             </ul>
                         </div>
                     </div>
@@ -645,7 +680,7 @@
                             <ul>
                                 <li><i class="fas fa-check"></i> <span data-hy="Բոլոր առարկաներից անհատական դասեր" data-ru="Индивидуальные уроки по всем предметам" data-en="Individual lessons for all subjects">Բոլոր առարկաներից անհատական դասեր</span></li>
                                 <li><i class="fas fa-check"></i> <span data-hy="Հարմարեցված ուսումնական պլան" data-ru="Адаптированный учебный план" data-en="Customized learning plan">Հարմարեցված ուսումնական պլան</span></li>
-                                <li><i class="fas fa-check"></i> <span data-hy="Թույլ կողմերի աշխատանք" data-ru="Работа над слабыми сторонами" data-en="Working on weak areas">ույլ կողմերի աշխատանք</span></li>
+                                <li><i class="fas fa-check"></i> <span data-hy="Թույլ կողմերի աշխատանք" data-ru="Работа над слабыми сторонами" data-en="Working on weak areas">Թույլ կողմերի աշխատանք</span></li>
                                 <li><i class="fas fa-check"></i> <span data-hy="Առաջադիմության հետևում" data-ru="Отслеживание прогресса" data-en="Progress tracking">Առաջադիմության հետևում</span></li>
                             </ul>
                         </div>
@@ -677,7 +712,7 @@
                             <ul>
                                 <li><i class="fas fa-check"></i> <span data-hy="Թարմ և բնական մթերքներ" data-ru="Свежие и натуральные продукты" data-en="Fresh and natural products">Թարմ և բնական մթերքներ</span></li>
                                 <li><i class="fas fa-check"></i> <span data-hy="Հավասարակշռված սննդակարգ" data-ru="Сбалансированное питание" data-en="Balanced diet">Հավասարակշռված սննդակարգ</span></li>
-<li><i              
+                                <li><i class="fas fa-check"></i> <span data-hy="Ալերգիաների հաշվառում" data-ru="Учёт аллергий" data-en="Allergy consideration">Ալերգիաների հաշվառում</span></li>
                             </ul>
                         </div>
                     </div>
@@ -781,7 +816,7 @@
                     <div class="director-photo"><i class="fas fa-user"></i></div>
                     <div class="director-info">
                         <h3 data-hy="[Անուն Ազգանուն]" data-ru="[Имя Фамилия]" data-en="[Name Surname]">[Անուն Ազգանուն]</h3>
-                        <div class="title" data-hy="Տնօրեն" data-ru="Директор" data-en="Director">Տնրեն</div>
+                        <div class="title" data-hy="Տնօրեն" data-ru="Директор" data-en="Director">Տնօրեն</div>
                         <p data-hy="Կրթական տնօրենը պատասխանատու է ուսումնական ծրագրերի որակի և մանկավարժների աշխատանքի կազմակերպման համար:" data-ru="Академический директор отвечает за качество учебных программ и организацию работы педагогов." data-en="The academic director is responsible for the quality of educational programs and the organization of teachers' work.">Կրթական տնօրենը պատասխանատու է ուսումնական ծրագրերի որակի և մանկավարժների աշխատանքի կազմակերպման համար:</p>
                         <div class="director-quote" data-hy="«Կրթությունը ամենաարժեքավոր նվերն է, որ կարող ենք տալ մեր երեխաներին»" data-ru="«Образование — самый ценный подарок, который мы можем дать нашим детям»" data-en="&quot;Education is the most valuable gift we can give our children&quot;">«Կրթությունը ամենաարժեքավոր նվերն է, որ կարող ենք տալ մեր երեխաներին»</div>
                     </div>
@@ -887,7 +922,7 @@
                             <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
                             <div class="contact-card-text">
                                 <h4 data-hy="Էլ. հասցե" data-ru="Email" data-en="Email">Էլ. հասցե</h4>
-                                <p><a href="mailto:info@merunk.am">info@merunk.am</a></p>
+                                <p><a href="mailto:info@serund.am">info@serund.am</a></p>
                             </div>
                         </div>
                     </div>
@@ -955,7 +990,7 @@
                     <iframe
                         src="https://www.openstreetmap.org/export/embed.html?bbox=44.5439%2C40.1937%2C44.5539%2C40.1997&amp;layer=mapnik&amp;marker=40.1967%2C44.5489"
                         allowfullscreen loading="lazy"
-                        title="ՍԵՐունդ Կրթական Կենտրոն  Նոր-Նորք, Մոլդովական 24/7">
+                        title="ՍԵՐունդ Կրթական Կենտրոն - Նոր-Նորք, Մոլդովական 24/7">
                     </iframe>
                 </div>
                 <div style="text-align:center;margin-top:15px">
@@ -974,7 +1009,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="logo-area" onclick="showPage('home')">
-                        <img src="logo.png" class="logo-img" alt="ՄԵՐՈՒՆՔ">
+                        <img src="logo.png" class="logo-img" alt="ՍԵՐունդ">
                         <div class="logo-text">
                             <h1>ՍԵՐունդ</h1>
                             <p data-hy="ԿՐԹԱԿԱՆ ԿԵՆՏՐՈՆ" data-ru="ОБРАЗОВАТЕЛЬНЫЙ ЦЕНТР" data-en="EDUCATIONAL CENTER">ԿՐԹԱԿԱՆ ԿԵՆՏՐՈՆ</p>
@@ -1011,7 +1046,7 @@
                     <ul>
                         <li><a><i class="fas fa-map-marker-alt"></i> <span data-hy="Նոր-Նորք, Մոլդովական 24/7" data-ru="Нор-Норк, Молдовакан 24/7" data-en="Nor Nork, Moldovakan 24/7">Նոր-Նորք, Մոլդովական 24/7</span></a></li>
                         <li><a href="tel:+37477047947"><i class="fas fa-phone"></i> +374 77 047 947</a></li>
-                        <li><a href="mailto:info@merunk.am"><i class="fas fa-envelope"></i> info@merunk.am</a></li>
+                        <li><a href="mailto:info@serund.am"><i class="fas fa-envelope"></i> info@serund.am</a></li>
                     </ul>
                 </div>
             </div>
