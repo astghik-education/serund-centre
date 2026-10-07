@@ -549,6 +549,127 @@
       margin-top: 7px;
     }
 
+    .gallery-section {
+      background: var(--mint);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      margin: 0;
+      overflow: hidden;
+      border-radius: 23px;
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .gallery-open {
+      display: block;
+      width: 100%;
+      position: relative;
+      aspect-ratio: 4/3;
+      padding: 0;
+      border: 0;
+      background: #dcebdd;
+      overflow: hidden;
+    }
+
+    .gallery-open:disabled {
+      cursor: default;
+    }
+
+    .gallery-open img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .gallery-open:not(:disabled):hover img {
+      transform: scale(1.045);
+    }
+
+    .gallery-placeholder {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      padding: 20px;
+      font-size: 0.95rem;
+    }
+
+    .gallery-caption {
+      padding: 18px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .lightbox {
+      width: min(1100px, calc(100% - 24px));
+      max-height: 94dvh;
+      padding: 16px;
+      border: 0;
+      border-radius: 18px;
+      background: #102419;
+      color: white;
+      overflow: auto;
+    }
+
+    .lightbox::backdrop {
+      background: #07130de8;
+    }
+
+    .lightbox-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 12px;
+    }
+
+    .lightbox-top button,
+    .lightbox-controls button {
+      border: 1px solid #ffffff60;
+      border-radius: 10px;
+      background: transparent;
+      color: white;
+      padding: 10px 16px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .lightbox img {
+      width: 100%;
+      height: min(65vh, 720px);
+      object-fit: contain;
+      background: #07170d;
+      border-radius: 10px;
+    }
+
+    .lightbox-caption {
+      color: white;
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    .lightbox-controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .lightbox-controls button:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
     .faq {
       background: white;
     }
@@ -725,12 +846,15 @@
         gap: 30px;
       }
 
-      .cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
+      .cards,
       .team-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -830,6 +954,29 @@
 
       .footer-links {
         margin-top: 25px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lightbox {
+        padding: 12px;
+      }
+
+      .lightbox img {
+        height: 55vh;
+      }
+
+      .lightbox-controls button {
+        font-size: 0.875rem;
+        padding: 10px;
+      }
+
+      .gallery-caption {
+        padding: 16px;
       }
     }
 
@@ -961,6 +1108,38 @@
 
   <footer class="footer" id="footer"></footer>
 
+  <dialog
+    class="lightbox"
+    id="lightbox"
+    aria-label="Gallery"
+  >
+    <div class="lightbox-top">
+      <span id="lightbox-count" aria-live="polite"></span>
+
+      <button id="lightbox-close" type="button">
+        Փակել
+      </button>
+    </div>
+
+    <img id="lightbox-image" alt="">
+
+    <p
+      class="lightbox-caption"
+      id="lightbox-caption"
+      aria-live="polite"
+    ></p>
+
+    <div class="lightbox-controls">
+      <button type="button" id="lightbox-prev">
+        Նախորդ
+      </button>
+
+      <button type="button" id="lightbox-next">
+        Հաջորդ
+      </button>
+    </div>
+  </dialog>
+
   <noscript>
     <p class="noscript">
       Միացրեք JavaScript-ը։ /
@@ -977,8 +1156,8 @@
     /*
       Լոգոն վերբեռնեք որպես logo.jpg՝ index.html-ի կողքին։
 
-      Թիմի լուսանկարները վերբեռնելուց հետո ստորև
-      photo դաշտում գրեք նկարի ֆայլի անունը։
+      Թիմի նկարները ավելացնելուց հետո photo դաշտում
+      գրեք նկարի ֆայլի անունը, իսկ name դաշտում՝ անունը։
 
       Օրինակ՝
       {
@@ -986,9 +1165,6 @@
         photo: 'team-founder.jpg',
         file: 'team-founder.jpg'
       }
-
-      Եթե photo դաշտը դատարկ է,
-      կցուցադրվի «Լուսանկարը՝ շուտով»։
     */
 
     const TEAM = [
@@ -1029,13 +1205,61 @@
       }
     ];
 
+    /*
+      ՊԱՏԿԵՐԱՍՐԱՀ
+
+      Նկարները վերբեռնեք index.html-ի կողքին՝ ստորև
+      նշված անուններով։
+
+      Կարող եք փոխել նկարների վերնագրերը երեք լեզուներով։
+
+      Ավելի շատ նկար ավելացնելու համար GALLERY ցանկում
+      ավելացրեք ևս մեկ նմանատիպ գրառում։
+    */
+
+    const GALLERY = [
+      {
+        src: 'gallery-1.jpg',
+        hy: 'Դասի ժամանակ',
+        ru: 'Во время занятия',
+        en: 'During a lesson'
+      },
+      {
+        src: 'gallery-2.jpg',
+        hy: 'Միասին սովորում ենք',
+        ru: 'Учимся вместе',
+        en: 'Learning together'
+      },
+      {
+        src: 'gallery-3.jpg',
+        hy: 'Ստեղծագործական պահեր',
+        ru: 'Творческие моменты',
+        en: 'Creative moments'
+      },
+      {
+        src: 'gallery-4.jpg',
+        hy: 'Խաղալով բացահայտում ենք',
+        ru: 'Открываем через игру',
+        en: 'Discovering through play'
+      },
+      {
+        src: 'gallery-5.jpg',
+        hy: 'Little English Club',
+        ru: 'Little English Club',
+        en: 'Little English Club'
+      },
+      {
+        src: 'gallery-6.jpg',
+        hy: 'Մեր կենտրոնի առօրյան',
+        ru: 'Повседневная жизнь центра',
+        en: 'Everyday life at our centre'
+      }
+    ];
+
     const INSTAGRAM =
       'https://www.instagram.com/serund.educentre/';
 
-    /*
-      Facebook-ի ճշգրիտ հղումը գրեք չակերտների ներսում։
-      Մինչև այն լրացնելը Facebook-ի հղումը չի ցուցադրվի։
-    */
+    // Facebook-ի ճշգրիտ հղումը գրեք չակերտների ներսում։
     const FACEBOOK = '';
 
     const PHONE = 'tel:+37477047947';
@@ -1051,8 +1275,7 @@
       'https://www.google.com/maps/dir/?api=1&destination=' +
       encodeURIComponent(MAP_QUERY);
 
-    const B =
-      '<span class="brand-word">ՍԵՐունդ</span>';
+    const B = '<span class="brand-word">ՍԵՐունդ</span>';
 
     const TEXT = {
       hy: {
@@ -1066,6 +1289,7 @@
           'Ծրագրեր',
           'Մեր մոտեցումը',
           'Մեր թիմը',
+          'Պատկերասրահ',
           'Հարցեր',
           'Կապ'
         ],
@@ -1234,6 +1458,19 @@
         ],
 
         photoSoon: 'Լուսանկարը՝ շուտով',
+
+        galleryLabel: 'ՊԱՏԿԵՐԱՍՐԱՀ',
+        galleryTitle: B + 'ի առօրյան',
+
+        galleryIntro:
+          'Դասերից, խաղերից ու ստեղծագործական զբաղմունքներից՝ ' +
+          'մեր կենտրոնի լուսանկարները։',
+
+        viewPhoto: 'Բացել լուսանկարը',
+        closePhoto: 'Փակել',
+        previousPhoto: 'Նախորդ',
+        nextPhoto: 'Հաջորդ',
+
         faqLabel: 'ՀԱՃԱԽ ՏՐՎՈՂ ՀԱՐՑԵՐ',
         faqTitle: 'Մինչև առաջին հանդիպումը',
 
@@ -1299,6 +1536,7 @@
           'Программы',
           'Наш подход',
           'Команда',
+          'Галерея',
           'Вопросы',
           'Контакты'
         ],
@@ -1464,6 +1702,18 @@
         ],
 
         photoSoon: 'Фото скоро появится',
+
+        galleryLabel: 'ГАЛЕРЕЯ',
+        galleryTitle: 'Будни центра ' + B,
+
+        galleryIntro:
+          'Фотографии занятий, игр и творческих моментов в нашем центре.',
+
+        viewPhoto: 'Открыть фотографию',
+        closePhoto: 'Закрыть',
+        previousPhoto: 'Назад',
+        nextPhoto: 'Далее',
+
         faqLabel: 'ЧАСТЫЕ ВОПРОСЫ',
         faqTitle: 'Перед первой встречей',
 
@@ -1526,6 +1776,7 @@
           'Programmes',
           'Our approach',
           'Our team',
+          'Gallery',
           'FAQ',
           'Contact'
         ],
@@ -1689,6 +1940,18 @@
         ],
 
         photoSoon: 'Photo coming soon',
+
+        galleryLabel: 'GALLERY',
+        galleryTitle: 'Everyday life at ' + B,
+
+        galleryIntro:
+          'Moments from lessons, play and creative activities at our centre.',
+
+        viewPhoto: 'Open photo',
+        closePhoto: 'Close',
+        previousPhoto: 'Previous',
+        nextPhoto: 'Next',
+
         faqLabel: 'FREQUENTLY ASKED QUESTIONS',
         faqTitle: 'Before your first visit',
 
@@ -1744,6 +2007,7 @@
       'programs',
       'about',
       'team',
+      'gallery',
       'faq',
       'contact'
     ];
@@ -1763,6 +2027,10 @@
 
     const menu = document.getElementById('menu');
     const nav = document.getElementById('navigation');
+    const lightbox = document.getElementById('lightbox');
+
+    const readyPhotos = new Set();
+    let currentPhoto = 0;
 
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, function (character) {
@@ -1790,7 +2058,144 @@
       }
     }
 
+    function showPhoto(index) {
+      const available = [...readyPhotos].sort(function (a, b) {
+        return a - b;
+      });
+
+      if (!available.includes(index)) {
+        return;
+      }
+
+      currentPhoto = index;
+
+      const photo = GALLERY[index];
+      const image = document.getElementById('lightbox-image');
+
+      image.src = photo.src;
+      image.alt = photo[language];
+
+      document.getElementById('lightbox-caption').textContent =
+        photo[language];
+
+      document.getElementById('lightbox-count').textContent =
+        (available.indexOf(index) + 1) + ' / ' + available.length;
+
+      document.getElementById('lightbox-prev').disabled =
+        available.length < 2;
+
+      document.getElementById('lightbox-next').disabled =
+        available.length < 2;
+    }
+
+    function movePhoto(direction) {
+      const available = [...readyPhotos].sort(function (a, b) {
+        return a - b;
+      });
+
+      if (!available.length) {
+        return;
+      }
+
+      const next =
+        (
+          available.indexOf(currentPhoto) +
+          direction +
+          available.length
+        ) % available.length;
+
+      showPhoto(available[next]);
+    }
+
+    document.getElementById('lightbox-close').addEventListener(
+      'click',
+      function () {
+        lightbox.close();
+      }
+    );
+
+    document.getElementById('lightbox-prev').addEventListener(
+      'click',
+      function () {
+        movePhoto(-1);
+      }
+    );
+
+    document.getElementById('lightbox-next').addEventListener(
+      'click',
+      function () {
+        movePhoto(1);
+      }
+    );
+
+    lightbox.addEventListener('click', function (event) {
+      if (event.target !== lightbox) {
+        return;
+      }
+
+      const bounds = lightbox.getBoundingClientRect();
+
+      const outside =
+        event.clientX < bounds.left ||
+        event.clientX > bounds.right ||
+        event.clientY < bounds.top ||
+        event.clientY > bounds.bottom;
+
+      if (outside) {
+        lightbox.close();
+      }
+    });
+
+    lightbox.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        movePhoto(-1);
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        movePhoto(1);
+      }
+    });
+
+    let touchStart = null;
+    const viewer = document.getElementById('lightbox-image');
+
+    viewer.addEventListener(
+      'touchstart',
+      function (event) {
+        touchStart = event.touches.length === 1
+          ? event.touches[0].clientX
+          : null;
+      },
+      { passive: true }
+    );
+
+    viewer.addEventListener(
+      'touchend',
+      function (event) {
+        if (touchStart === null) {
+          return;
+        }
+
+        const distance =
+          event.changedTouches[0].clientX - touchStart;
+
+        if (Math.abs(distance) > 55) {
+          movePhoto(distance < 0 ? 1 : -1);
+        }
+
+        touchStart = null;
+      },
+      { passive: true }
+    );
+
     function render(lang) {
+      if (lightbox.open) {
+        lightbox.close();
+      }
+
+      readyPhotos.clear();
       language = lang;
 
       const t = TEXT[lang];
@@ -1849,9 +2254,7 @@
           <div class="wrap hero-grid">
             <div>
               <div class="eyebrow">${t.heroLabel}</div>
-
               <h1>${t.heroTitle}</h1>
-
               <p>${t.heroDescription}</p>
 
               <div class="actions">
@@ -2055,6 +2458,51 @@
           </div>
         </section>
 
+        <section class="gallery-section" id="gallery">
+          <div class="wrap">
+            <div class="section-head">
+              <div>
+                <div class="eyebrow">${t.galleryLabel}</div>
+                <h2>${t.galleryTitle}</h2>
+              </div>
+
+              <p>${t.galleryIntro}</p>
+            </div>
+
+            <div class="gallery-grid">
+              ${GALLERY.map(function (photo, index) {
+                return `
+                  <figure class="gallery-item">
+                    <button
+                      class="gallery-open"
+                      type="button"
+                      data-photo="${index}"
+                      aria-label="${t.viewPhoto}: ${escapeHtml(photo[lang])}"
+                      disabled
+                    >
+                      <span class="gallery-placeholder">
+                        ${t.photoSoon}
+                      </span>
+
+                      <img
+                        src="${escapeHtml(photo.src)}"
+                        alt="${escapeHtml(photo[lang])}"
+                        loading="lazy"
+                        width="800"
+                        height="600"
+                      >
+                    </button>
+
+                    <figcaption class="gallery-caption">
+                      ${escapeHtml(photo[lang])}
+                    </figcaption>
+                  </figure>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </section>
+
         <section class="faq" id="faq">
           <div class="wrap faq-grid">
             <div>
@@ -2220,6 +2668,52 @@
         </div>
       `;
 
+      document.querySelectorAll('.gallery-open img').forEach(
+        function (image) {
+          const button = image.closest('button');
+          const index = Number(button.dataset.photo);
+
+          function loaded() {
+            if (!image.naturalWidth) {
+              return;
+            }
+
+            readyPhotos.add(index);
+            button.disabled = false;
+
+            button.querySelector('.gallery-placeholder').hidden = true;
+          }
+
+          function failed() {
+            image.hidden = true;
+            button.disabled = true;
+            readyPhotos.delete(index);
+          }
+
+          image.addEventListener('load', loaded);
+          image.addEventListener('error', failed);
+
+          if (image.complete) {
+            if (image.naturalWidth) {
+              loaded();
+            } else {
+              failed();
+            }
+          }
+        }
+      );
+
+      lightbox.setAttribute('aria-label', t.galleryLabel);
+
+      document.getElementById('lightbox-close').textContent =
+        t.closePhoto;
+
+      document.getElementById('lightbox-prev').textContent =
+        t.previousPhoto;
+
+      document.getElementById('lightbox-next').textContent =
+        t.nextPhoto;
+
       document.querySelectorAll('.portrait img').forEach(
         function (image) {
           image.addEventListener('error', function () {
@@ -2246,6 +2740,13 @@
     });
 
     document.addEventListener('click', function (event) {
+      const photoButton = event.target.closest('[data-photo]');
+
+      if (photoButton && !photoButton.disabled) {
+        showPhoto(Number(photoButton.dataset.photo));
+        lightbox.showModal();
+      }
+
       const filter = event.target.closest('[data-filter]');
 
       if (filter) {
